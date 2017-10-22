@@ -1,6 +1,6 @@
 'use strict';
 
-function action () {
+function action() {
   chrome.storage.local.get({
     enabled: true,
     eMode: 'disable_non_proxied_udp',
@@ -13,10 +13,12 @@ function action () {
       });
     });
     // icon
-    let root = 'data/icons/' + (prefs.enabled ? '' : 'disabled/');
+    const root = 'data/icons/' + (prefs.enabled ? '' : 'disabled/');
     chrome.browserAction.setIcon({
       path: {
         16: root + '16.png',
+        18: root + '18.png',
+        19: root + '19.png',
         32: root + '32.png',
         64: root + '64.png'
       }
@@ -42,13 +44,14 @@ chrome.browserAction.onClicked.addListener(() => {
   }));
 });
 
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: 'leakage',
-    contexts: ['browser_action'],
-    title: 'Check WebTRC Leakage'
-  });
-});
+(callback => {
+  chrome.runtime.onInstalled.addListener(callback);
+  chrome.runtime.onStartup.addListener(callback);
+})(() => chrome.contextMenus.create({
+  id: 'leakage',
+  contexts: ['browser_action'],
+  title: 'Check WebTRC Leakage'
+}));
 
 chrome.contextMenus.onClicked.addListener(() => {
   chrome.tabs.create({
@@ -59,9 +62,9 @@ chrome.contextMenus.onClicked.addListener(() => {
 // FAQs & Feedback
 chrome.storage.local.get({
   'version': null,
-  'faqs': navigator.userAgent.toLowerCase().indexOf('firefox') === -1 ? true : false
+  'faqs': navigator.userAgent.indexOf('Firefox') === -1
 }, prefs => {
-  let version = chrome.runtime.getManifest().version;
+  const version = chrome.runtime.getManifest().version;
 
   if (prefs.version ? (prefs.faqs && prefs.version !== version) : true) {
     chrome.storage.local.set({version}, () => {
@@ -72,7 +75,7 @@ chrome.storage.local.get({
     });
   }
 });
-(function () {
-  let {name, version} = chrome.runtime.getManifest();
+{
+  const {name, version} = chrome.runtime.getManifest();
   chrome.runtime.setUninstallURL('http://add0n.com/feedback.html?name=' + name + '&version=' + version);
-})();
+}
