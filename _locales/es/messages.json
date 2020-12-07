@@ -1,0 +1,5 @@
+{
+  "description": {
+    "message": "Oculta sus direcciones IP públicas y privadas configurando cómo se enruta el tráfico de red de WebRTC."
+  }
+}

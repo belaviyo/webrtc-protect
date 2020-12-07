@@ -1,10 +1,9 @@
 {
-  "name": "WebRTC Protect",
-  "short_name": "iwprotect",
-  "description": "Prevent WebRTC from leaking your private and public IPs",
-  "author": "Joe Ertaba",
-  "version": "0.1.2",
+  "name": "WebRTC Protect - Protect IP Leak",
+  "description": "__MSG_description__",
+  "version": "0.1.7",
   "manifest_version": 2,
+  "default_locale": "en",
   "permissions": [
     "storage",
     "privacy",
@@ -16,17 +15,8 @@
       "common.js"
     ]
   },
-  "browser_action": {
-    "default_icon": {
-      "16": "data/icons/16.png",
-      "18": "data/icons/18.png",
-      "19": "data/icons/19.png",
-      "32": "data/icons/32.png",
-      "48": "data/icons/48.png",
-      "64": "data/icons/64.png"
-    }
-  },
-  "homepage_url": "http://add0n.com/webrtc-protect.html",
+  "browser_action": {},
+  "homepage_url": "https://add0n.com/webrtc-protect.html",
   "icons": {
     "16": "data/icons/16.png",
     "18": "data/icons/18.png",
@@ -34,20 +24,16 @@
     "32": "data/icons/32.png",
     "48": "data/icons/48.png",
     "64": "data/icons/64.png",
-    "128": "data/icons/128.png"
+    "128": "data/icons/128.png",
+    "256": "data/icons/256.png"
   },
   "content_scripts": [{
+    "run_at": "document_start",
     "matches": ["*://*/*"],
     "js": ["data/inject.js"]
   }],
   "options_ui": {
     "page": "data/options/index.html",
     "chrome_style": true
-  },
-  "applications": {
-    "gecko": {
-      "id": "{4bfcf5ab-fb35-4da0-bce3-d8ad07adb08f}",
-      "strict_min_version": "55.0"
-    }
   }
 }

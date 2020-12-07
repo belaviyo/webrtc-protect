@@ -3,29 +3,43 @@
 function action() {
   chrome.storage.local.get({
     enabled: true,
-    eMode: 'disable_non_proxied_udp',
+    eMode: /Firefox/.test(navigator.userAgent) ? 'proxy_only' : 'disable_non_proxied_udp',
     dMode: 'default_public_interface_only'
   }, prefs => {
     // webRTCIPHandlingPolicy
+    const value = prefs.enabled ? prefs.eMode : prefs.dMode;
     chrome.privacy.network.webRTCIPHandlingPolicy.clear({}, () => {
       chrome.privacy.network.webRTCIPHandlingPolicy.set({
-        value: prefs.enabled ? prefs.eMode : prefs.dMode
+        value
+      }, () => {
+        chrome.privacy.network.webRTCIPHandlingPolicy.get({}, s => {
+          let path = 'data/icons/';
+          let title = 'WebRTC access is allowed';
+          if (s.value !== value) {
+            path += 'red/';
+            title = 'WebRTC access cannot be changed. It is controlled by another extension';
+          }
+          else if (prefs.enabled === false) {
+            path += 'disabled/';
+            title = 'WebRTC access is blocked';
+          }
+          // icon
+          chrome.browserAction.setIcon({
+            path: {
+              16: path + '16.png',
+              18: path + '18.png',
+              19: path + '19.png',
+              32: path + '32.png',
+              48: path + '48.png',
+              64: path + '64.png'
+            }
+          });
+          // tooltip
+          chrome.browserAction.setTitle({
+            title
+          });
+        });
       });
-    });
-    // icon
-    const root = 'data/icons/' + (prefs.enabled ? '' : 'disabled/');
-    chrome.browserAction.setIcon({
-      path: {
-        16: root + '16.png',
-        18: root + '18.png',
-        19: root + '19.png',
-        32: root + '32.png',
-        64: root + '64.png'
-      }
-    });
-    // tooltip
-    chrome.browserAction.setTitle({
-      title: 'WebRTC protect (' + (prefs.enabled ? 'enabled' : 'disabled') + ')'
     });
   });
 }
@@ -44,38 +58,44 @@ chrome.browserAction.onClicked.addListener(() => {
   }));
 });
 
-(callback => {
-  chrome.runtime.onInstalled.addListener(callback);
-  chrome.runtime.onStartup.addListener(callback);
-})(() => chrome.contextMenus.create({
-  id: 'leakage',
-  contexts: ['browser_action'],
-  title: 'Check WebTRC Leakage'
-}));
-
+{
+  const onStartup = () => chrome.contextMenus.create({
+    id: 'leakage',
+    contexts: ['browser_action'],
+    title: 'Check WebTRC Leakage'
+  });
+  chrome.runtime.onInstalled.addListener(onStartup);
+  chrome.runtime.onStartup.addListener(onStartup);
+}
 chrome.contextMenus.onClicked.addListener(() => {
   chrome.tabs.create({
-    url: 'http://tools.add0n.com/webrtc-leakage.html'
+    url: 'https://webbrowsertools.com/ip-address/'
   });
 });
 
-// FAQs & Feedback
-chrome.storage.local.get({
-  'version': null,
-  'faqs': navigator.userAgent.indexOf('Firefox') === -1
-}, prefs => {
-  const version = chrome.runtime.getManifest().version;
-
-  if (prefs.version ? (prefs.faqs && prefs.version !== version) : true) {
-    chrome.storage.local.set({version}, () => {
-      chrome.tabs.create({
-        url: 'http://add0n.com/webrtc-protect.html?version=' + version +
-          '&type=' + (prefs.version ? ('upgrade&p=' + prefs.version) : 'install')
-      });
-    });
-  }
-});
+/* FAQs & Feedback */
 {
-  const {name, version} = chrome.runtime.getManifest();
-  chrome.runtime.setUninstallURL('http://add0n.com/feedback.html?name=' + name + '&version=' + version);
+  const {management, runtime: {onInstalled, setUninstallURL, getManifest}, storage, tabs} = chrome;
+  if (navigator.webdriver !== true) {
+    const page = getManifest().homepage_url;
+    const {name, version} = getManifest();
+    onInstalled.addListener(({reason, previousVersion}) => {
+      management.getSelf(({installType}) => installType === 'normal' && storage.local.get({
+        'faqs': true,
+        'last-update': 0
+      }, prefs => {
+        if (reason === 'install' || (prefs.faqs && reason === 'update')) {
+          const doUpdate = (Date.now() - prefs['last-update']) / 1000 / 60 / 60 / 24 > 45;
+          if (doUpdate && previousVersion !== version) {
+            tabs.create({
+              url: page + '?version=' + version + (previousVersion ? '&p=' + previousVersion : '') + '&type=' + reason,
+              active: reason === 'install'
+            });
+            storage.local.set({'last-update': Date.now()});
+          }
+        }
+      }));
+    });
+    setUninstallURL(page + '?rd=feedback&name=' + encodeURIComponent(name) + '&version=' + version);
+  }
 }

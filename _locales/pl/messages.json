@@ -1,0 +1,5 @@
+{
+  "description": {
+    "message": "Ukrywa prywatne i publiczne adresy IP, konfigurując sposób kierowania ruchu sieciowego WebRTC."
+  }
+}

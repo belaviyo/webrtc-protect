@@ -1,0 +1,5 @@
+{
+  "description": {
+    "message": "Döljer dina privata och offentliga IP-adresser genom att konfigurera hur WebRTCs nätverkstrafik dirigeras."
+  }
+}

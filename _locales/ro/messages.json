@@ -1,0 +1,5 @@
+{
+  "description": {
+    "message": "Ascunde adresele IP private și publice prin configurarea modului în care este direcționat traficul de rețea WebRTC."
+  }
+}
