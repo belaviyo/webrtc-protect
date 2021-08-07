@@ -1,0 +1,5 @@
+{
+  "description": {
+    "message": "WebRTC'nin ağ trafiğinin nasıl yönlendirileceğini yapılandırarak özel ve genel IP adreslerinizi gizler."
+  }
+}
