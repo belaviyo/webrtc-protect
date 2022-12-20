@@ -21,6 +21,9 @@ textarea,
 input {
   border: solid 1px rgba(0, 0, 0, 0.25);
 }
+select {
+  width: 100%;
+}
 input[type=button]:disabled {
   opacity: 0.5;
 }
@@ -55,13 +58,17 @@ a:visited {
   background-color: #1b8057;
 }
 
-#thrd {
+.second {
   display: grid;
-  grid-template-columns: min-content max-content 1fr;
-  grid-gap: 10px 5px;
+  grid-template-columns: min-content 1fr;
+  grid-gap: 5px;
   align-items: center;
 }
-
+.note {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 3px;
+  margin-top: 5px;
+}
 label[for="device-enum-api"] {
   grid-column: 2/4;
 }

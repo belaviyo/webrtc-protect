@@ -19,7 +19,6 @@ function restore() {
     dMode: 'default_public_interface_only',
     dAPI: true
   }, prefs => {
-    console.log(prefs.eMode);
     document.getElementById(prefs.enabled ? 'enabled' : 'disabled').checked = true;
     document.getElementById('when-enabled').value = prefs.eMode;
     document.getElementById('when-disabled').value = prefs.dMode;

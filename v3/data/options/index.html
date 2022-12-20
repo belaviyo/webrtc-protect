@@ -6,33 +6,39 @@
     <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
-    <div id="thrd">
+    <div class="second">
       <input type="radio" name="select" id="enabled">
-      <label for="enabled">Enabled (recommended)</label>
+      <label for="enabled">Enabled (recommended):</label>
+      <span></span>
       <select id="when-enabled">
         <option value="disable_non_proxied_udp">Disable non-proxied UDP (force proxy)</option>
         <option value="proxy_only">Only connections using TURN on a TCP connection through a proxy</option>
       </select>
       <input type="radio" name="select" id="disabled">
-      <label for="disabled">Disabled</label>
+      <label for="disabled">Disabled:</label>
+      <span></span>
       <select id="when-disabled">
         <option value="default_public_interface_only">Use the default public interface only</option>
         <option value="default_public_and_private_interfaces">Use the default public interface and private interface</option>
       </select>
-      <input type="checkbox" id="device-enum-api">
-      <label for="device-enum-api">Disable WebRTC Media Device Enumeration API (only works if WebRTC protection is enabled)</label>
     </div>
+    <p class="second">
+      <input type="checkbox" id="device-enum-api">
+      <label for="device-enum-api">Disable WebRTC Media Device Enumeration API</label>
+    </p>
+
     <p>
       Can this extension protect incognito (private) mode? <span id="incognito">No</span>
-      <div style="background-color: rgba(0, 0, 0, 0.05); padding: 3px; margin-top: 5px;">In Chrome to enable this option, mark "Allow in incognito" checkbox</div>
+      <div class="note">To enable this option in Chrome, check the "Allow in incognito" box for this extension.</div>
     </p>
-    <div id="explore"></div>
-    <div>
+    <p>
       <input type="button" value="Factory Reset" id="reset">
-      <input type="button" value="Support Development" id="support"> - <input type="button" value="Save Options" id="save">
+      <input type="button" value="Support Development" id="support">
+    </p>
+    <p>
+      <input type="button" value="Save Options" id="save">
       <span id="toast"></span>
-    </div>
+    </p>
     <script src="index.js"></script>
-    <script async src="matched.js"></script>
   </body>
 </html>

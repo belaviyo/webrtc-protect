@@ -2,18 +2,22 @@
   "name": "WebRTC Protect - Protect IP Leak",
   "description": "__MSG_description__",
   "version": "0.2.0",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "default_locale": "en",
   "permissions": [
     "storage",
     "privacy",
-    "contextMenus"
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*/*"
   ],
   "background": {
     "service_worker": "worker.js"
   },
-  "browser_action": {},
-  "homepage_url": "https://add0n.com/webrtc-protect.html",
+  "action": {},
+  "homepage_url": "https://webextension.org/listing/webrtc-protect.html",
   "icons": {
     "16": "data/icons/16.png",
     "32": "data/icons/32.png",
@@ -23,17 +27,10 @@
     "256": "data/icons/256.png",
     "512": "data/icons/512.png"
   },
-  "content_scripts": [{
-    "run_at": "document_start",
-    "matches": ["*://*/*"],
-    "js": ["data/inject.js"]
-  }],
   "options_ui": {
     "page": "data/options/index.html"
   },
   "commands": {
-    "_execute_action": {
-      "description": "Press the action button"
-    }
+    "_execute_action": {}
   }
 }

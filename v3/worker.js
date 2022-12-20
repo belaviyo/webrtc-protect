@@ -1,4 +1,4 @@
-'use strict';
+self.importScripts('context.js');
 
 const isFirefox = /Firefox/.test(navigator.userAgent) || typeof InstallTrigger !== 'undefined';
 
@@ -16,17 +16,18 @@ function action() {
       }, () => {
         chrome.privacy.network.webRTCIPHandlingPolicy.get({}, s => {
           let path = 'data/icons/';
-          let title = 'WebRTC access is allowed';
+          let title = 'WebRTC Protection in On';
+
           if (s.value !== value) {
             path += 'red/';
             title = 'WebRTC access cannot be changed. It is controlled by another extension';
           }
           else if (prefs.enabled === false) {
             path += 'disabled/';
-            title = 'WebRTC access is blocked';
+            title = 'WebRTC Protection in Off';
           }
           // icon
-          chrome.browserAction.setIcon({
+          chrome.action.setIcon({
             path: {
               16: path + '16.png',
               32: path + '32.png',
@@ -34,7 +35,7 @@ function action() {
             }
           });
           // tooltip
-          chrome.browserAction.setTitle({
+          chrome.action.setTitle({
             title
           });
         });
@@ -49,28 +50,37 @@ chrome.storage.onChanged.addListener(() => {
   action();
 });
 
-chrome.browserAction.onClicked.addListener(() => {
-  chrome.storage.local.get({
-    enabled: true
-  }, prefs => chrome.storage.local.set({
-    enabled: !prefs.enabled
-  }));
-});
+chrome.action.onClicked.addListener(() => chrome.storage.local.get({
+  enabled: true
+}, prefs => chrome.storage.local.set({
+  enabled: !prefs.enabled
+})));
 
 {
-  const onStartup = () => chrome.contextMenus.create({
-    id: 'leakage',
-    contexts: ['browser_action'],
-    title: 'Check WebTRC Leakage'
-  });
-  chrome.runtime.onInstalled.addListener(onStartup);
-  chrome.runtime.onStartup.addListener(onStartup);
+  const once = () => {
+    chrome.scripting.unregisterContentScripts().then(() => {
+      const props = {
+        'matches': ['*://*/*'],
+        'allFrames': true,
+        'matchOriginAsFallback': true,
+        'runAt': 'document_start'
+      };
+      chrome.scripting.registerContentScripts([{
+        'id': 'page',
+        'js': ['/data/inject/main.js'],
+        'world': 'MAIN',
+        ...props
+      }, {
+        'id': 'chrome',
+        'js': ['/data/inject/isolated.js'],
+        'world': 'ISOLATED',
+        ...props
+      }]);
+    });
+  };
+  chrome.runtime.onInstalled.addListener(once);
+  chrome.runtime.onStartup.addListener(once);
 }
-chrome.contextMenus.onClicked.addListener(() => {
-  chrome.tabs.create({
-    url: 'https://webbrowsertools.com/ip-address/'
-  });
-});
 
 /* FAQs & Feedback */
 {
