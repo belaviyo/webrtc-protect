@@ -1,14 +1,13 @@
 {
   "name": "WebRTC Protect - Protect IP Leak",
   "description": "__MSG_description__",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "manifest_version": 3,
   "default_locale": "en",
   "permissions": [
     "storage",
     "privacy",
-    "contextMenus",
-    "scripting"
+    "contextMenus"
   ],
   "host_permissions": [
     "*://*/*"
@@ -19,17 +18,32 @@
   "action": {},
   "homepage_url": "https://webextension.org/listing/webrtc-protect.html",
   "icons": {
-    "16": "data/icons/16.png",
-    "32": "data/icons/32.png",
-    "48": "data/icons/48.png",
-    "64": "data/icons/64.png",
-    "128": "data/icons/128.png",
-    "256": "data/icons/256.png",
-    "512": "data/icons/512.png"
+    "16": "/data/icons/16.png",
+    "32": "/data/icons/32.png",
+    "48": "/data/icons/48.png",
+    "64": "/data/icons/64.png",
+    "128": "/data/icons/128.png",
+    "256": "/data/icons/256.png",
+    "512": "/data/icons/512.png"
   },
   "options_ui": {
-    "page": "data/options/index.html"
+    "page": "/data/options/index.html"
   },
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["/data/inject/main.js"],
+    "run_at": "document_start",
+    "all_frames": true,
+    "match_about_blank": true,
+    "world": "MAIN"
+  }, {
+    "matches": ["*://*/*"],
+    "js": ["/data/inject/isolated.js"],
+    "run_at": "document_start",
+    "all_frames": true,
+    "match_about_blank": true,
+    "world": "ISOLATED"
+  }],
   "commands": {
     "_execute_action": {}
   }

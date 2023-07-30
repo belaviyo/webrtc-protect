@@ -15,7 +15,7 @@ function action() {
         value
       }, () => {
         chrome.privacy.network.webRTCIPHandlingPolicy.get({}, s => {
-          let path = 'data/icons/';
+          let path = '/data/icons/';
           let title = 'WebRTC Protection in On';
 
           if (s.value !== value) {
@@ -55,32 +55,6 @@ chrome.action.onClicked.addListener(() => chrome.storage.local.get({
 }, prefs => chrome.storage.local.set({
   enabled: !prefs.enabled
 })));
-
-{
-  const once = () => {
-    chrome.scripting.unregisterContentScripts().then(() => {
-      const props = {
-        'matches': ['*://*/*'],
-        'allFrames': true,
-        'matchOriginAsFallback': true,
-        'runAt': 'document_start'
-      };
-      chrome.scripting.registerContentScripts([{
-        'id': 'page',
-        'js': ['/data/inject/main.js'],
-        'world': 'MAIN',
-        ...props
-      }, {
-        'id': 'chrome',
-        'js': ['/data/inject/isolated.js'],
-        'world': 'ISOLATED',
-        ...props
-      }]);
-    });
-  };
-  chrome.runtime.onInstalled.addListener(once);
-  chrome.runtime.onStartup.addListener(once);
-}
 
 /* FAQs & Feedback */
 {
