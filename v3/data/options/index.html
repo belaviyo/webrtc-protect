@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>WebRTC Protect :: Options Page</title>
-    <link rel="stylesheet" type="text/css" href="index.css">
-  </head>
-  <body>
-    <div class="second">
-      <input type="radio" name="select" id="enabled">
-      <label for="enabled">Enabled (recommended):</label>
-      <span></span>
-      <select id="when-enabled">
-        <option value="disable_non_proxied_udp">Disable non-proxied UDP (force proxy)</option>
-        <option value="proxy_only">Only connections using TURN on a TCP connection through a proxy</option>
-      </select>
-      <input type="radio" name="select" id="disabled">
-      <label for="disabled">Disabled:</label>
-      <span></span>
-      <select id="when-disabled">
-        <option value="default_public_interface_only">Use the default public interface only</option>
-        <option value="default_public_and_private_interfaces">Use the default public interface and private interface</option>
-      </select>
-    </div>
-    <p class="second">
-      <input type="checkbox" id="device-enum-api">
-      <label for="device-enum-api">Disable WebRTC Media Device Enumeration API</label>
-    </p>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Options Page :: WebRTC Protect</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+  <div class="second">
+    <input type="radio" name="select" id="enabled">
+    <label for="enabled">Enabled (recommended):</label>
+    <span></span>
+    <select id="when-enabled">
+      <option value="disable_non_proxied_udp">Disable non-proxied UDP (force proxy)</option>
+      <option value="proxy_only">Only connections using TURN on a TCP connection through a proxy</option>
+    </select>
+    <input type="radio" name="select" id="disabled">
+    <label for="disabled">Disabled:</label>
+    <span></span>
+    <select id="when-disabled">
+      <option value="default_public_interface_only">Use the default public interface only</option>
+      <option value="default_public_and_private_interfaces">Use the default public interface and private interface</option>
+    </select>
+  </div>
+  <p class="second">
+    <input type="checkbox" id="device-enum-api">
+    <label for="device-enum-api">Disable WebRTC Media Device Enumeration API</label>
+  </p>
 
-    <p>
-      Can this extension protect incognito (private) mode? <span id="incognito">No</span>
-      <div class="note">To enable this option in Chrome, check the "Allow in incognito" box for this extension.</div>
-    </p>
-    <p>
-      <input type="button" value="Factory Reset" id="reset">
-      <input type="button" value="Support Development" id="support">
-    </p>
-    <p>
-      <input type="button" value="Save Options" id="save">
-      <span id="toast"></span>
-    </p>
-    <script src="index.js"></script>
-  </body>
+  <p class="fgtt">
+    Can this extension protect incognito (private) mode? <span id="incognito">No</span>
+    <div class="note">To enable this option in Chrome, check the "Allow in incognito" box for this extension.</div>
+  </p>
+  <div id="buttons">
+    <input type="button" value="Factory Reset" id="reset">
+    <input type="button" value="Support Development" id="support">
+    <input type="button" value="Save Options" id="save">
+    <span id="toast"></span>
+  </div>
+  <script src="index.js"></script>
+</body>
 </html>

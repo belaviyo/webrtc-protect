@@ -19,29 +19,34 @@
   });
 
   const onStartup = async () => {
+    if (onStartup.done) {
+      return;
+    }
+    onStartup.done = true;
+
     await chrome.contextMenus.create({
       id: 'test',
       contexts: ['action'],
       title: 'Check WebTRC Leakage'
-    });
+    }, () => chrome.runtime.lastError);
     await chrome.contextMenus.create({
       id: 'dAPI',
       contexts: ['action'],
       title: 'Disable WebRTC Media Device Enumeration API',
       type: 'checkbox'
-    });
+    }, () => chrome.runtime.lastError);
     await chrome.contextMenus.create({
       id: 'when-enabled',
       contexts: ['action'],
       title: 'When Enabled'
-    });
+    }, () => chrome.runtime.lastError);
     await chrome.contextMenus.create({
       id: 'disable_non_proxied_udp',
       contexts: ['action'],
       title: 'Disable non-proxied UDP (force proxy)',
       parentId: 'when-enabled',
       type: 'radio'
-    });
+    }, () => chrome.runtime.lastError);
     await chrome.contextMenus.create({
       id: 'proxy_only',
       contexts: ['action'],
@@ -49,26 +54,27 @@
       parentId: 'when-enabled',
       type: 'radio',
       enabled: isFirefox
-    });
+    }, () => chrome.runtime.lastError);
     await chrome.contextMenus.create({
       id: 'when-disabled',
       contexts: ['action'],
       title: 'When Disabled'
-    });
+    }, () => chrome.runtime.lastError);
     await chrome.contextMenus.create({
       id: 'default_public_interface_only',
       contexts: ['action'],
       title: 'Use the default public interface only',
       parentId: 'when-disabled',
       type: 'radio'
-    });
+    }, () => chrome.runtime.lastError);
     await chrome.contextMenus.create({
       id: 'default_public_and_private_interfaces',
       contexts: ['action'],
       title: 'Use the default public interface and private interface',
       parentId: 'when-disabled',
       type: 'radio'
-    });
+    }, () => chrome.runtime.lastError);
+    //
     update();
   };
 
@@ -92,7 +98,10 @@
         eMode: info.menuItemId
       });
     }
-    else if (info.menuItemId === 'default_public_interface_only' || info.menuItemId === 'default_public_and_private_interfaces') {
+    else if (
+      info.menuItemId === 'default_public_interface_only' ||
+      info.menuItemId === 'default_public_and_private_interfaces'
+    ) {
       chrome.storage.local.set({
         dMode: info.menuItemId
       });

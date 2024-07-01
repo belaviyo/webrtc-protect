@@ -1,7 +1,7 @@
 {
   "name": "WebRTC Protect - Protect IP Leak",
   "description": "__MSG_description__",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "manifest_version": 3,
   "default_locale": "en",
   "permissions": [
