@@ -1,5 +1,5 @@
 {
   "description": {
-    "message": "Blendet Ihre privaten und öffentlichen IP-Adressen aus, indem Sie konfigurieren, wie der Netzwerkverkehr von WebRTC weitergeleitet wird."
+    "message": "Verbirgt Ihre private und öffentliche IP, indem der WebRTC-Netzwerkverkehr entsprechend konfiguriert wird."
   }
 }

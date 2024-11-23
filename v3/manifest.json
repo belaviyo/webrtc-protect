@@ -1,7 +1,7 @@
 {
   "name": "WebRTC Protect - Protect IP Leak",
   "description": "__MSG_description__",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "manifest_version": 3,
   "default_locale": "en",
   "permissions": [
@@ -13,7 +13,8 @@
     "*://*/*"
   ],
   "background": {
-    "service_worker": "worker.js"
+    "service_worker": "worker.js",
+    "scripts": ["context.js", "worker.js"]
   },
   "action": {},
   "homepage_url": "https://webextension.org/listing/webrtc-protect.html",
@@ -46,5 +47,11 @@
   }],
   "commands": {
     "_execute_action": {}
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{4bfcf5ab-fb35-4da0-bce3-d8ad07adb08f}",
+      "strict_min_version": "128.0"
+    }
   }
 }
