@@ -1,5 +1,38 @@
 {
   "description": {
     "message": "Hides your private and public IP addresses by configuring how WebRTC's network traffic is routed."
+  },
+  "bg_1": {
+    "message": "Check WebTRC Leakage"
+  },
+  "bg_2": {
+    "message": "Disable WebRTC Media Device Enumeration API"
+  },
+  "bg_3": {
+    "message": "When Enabled"
+  },
+  "bg_4": {
+    "message": "Disable non-proxied UDP (force proxy)"
+  },
+  "bg_5": {
+    "message": "Only connections using TURN on a TCP connection through a proxy"
+  },
+  "bg_6": {
+    "message": "When Disabled"
+  },
+  "bg_7": {
+    "message": "Use the default public interface only"
+  },
+  "bg_8": {
+    "message": "Use the default public interface and private interface"
+  },
+  "bg_1": {
+    "message": ""
+  },
+  "bg_1": {
+    "message": ""
+  },
+  "bg_1": {
+    "message": ""
   }
 }

@@ -6,7 +6,7 @@
     dAPI: true,
     eMode: isFirefox ? 'proxy_only' : 'disable_non_proxied_udp',
     dMode: 'default_public_interface_only'
-  }, prefs => {
+  }).then(prefs => {
     chrome.contextMenus.update('dAPI', {
       checked: prefs.dAPI
     });
@@ -24,58 +24,57 @@
     }
     onStartup.done = true;
 
-    await Promise.all([
-      chrome.contextMenus.create({
-        id: 'test',
-        contexts: ['action'],
-        title: 'Check WebTRC Leakage'
-      }, () => chrome.runtime.lastError),
-      chrome.contextMenus.create({
-        id: 'dAPI',
-        contexts: ['action'],
-        title: 'Disable WebRTC Media Device Enumeration API',
-        type: 'checkbox'
-      }, () => chrome.runtime.lastError),
-      chrome.contextMenus.create({
-        id: 'when-enabled',
-        contexts: ['action'],
-        title: 'When Enabled'
-      }, () => chrome.runtime.lastError),
-      chrome.contextMenus.create({
-        id: 'disable_non_proxied_udp',
-        contexts: ['action'],
-        title: 'Disable non-proxied UDP (force proxy)',
-        parentId: 'when-enabled',
-        type: 'radio'
-      }, () => chrome.runtime.lastError),
-      chrome.contextMenus.create({
-        id: 'proxy_only',
-        contexts: ['action'],
-        title: 'Only connections using TURN on a TCP connection through a proxy',
-        parentId: 'when-enabled',
-        type: 'radio',
-        enabled: isFirefox
-      }, () => chrome.runtime.lastError),
-      chrome.contextMenus.create({
-        id: 'when-disabled',
-        contexts: ['action'],
-        title: 'When Disabled'
-      }, () => chrome.runtime.lastError),
-      chrome.contextMenus.create({
-        id: 'default_public_interface_only',
-        contexts: ['action'],
-        title: 'Use the default public interface only',
-        parentId: 'when-disabled',
-        type: 'radio'
-      }, () => chrome.runtime.lastError),
-      chrome.contextMenus.create({
-        id: 'default_public_and_private_interfaces',
-        contexts: ['action'],
-        title: 'Use the default public interface and private interface',
-        parentId: 'when-disabled',
-        type: 'radio'
-      }, () => chrome.runtime.lastError)
-    ]);
+    await chrome.contextMenus.create({
+      id: 'test',
+      contexts: ['action'],
+      title: chrome.i18n.getMessage('bg_1')
+    }, () => chrome.runtime.lastError),
+    await chrome.contextMenus.create({
+      id: 'dAPI',
+      contexts: ['action'],
+      title: chrome.i18n.getMessage('bg_2'),
+      type: 'checkbox'
+    }, () => chrome.runtime.lastError),
+    await chrome.contextMenus.create({
+      id: 'when-enabled',
+      contexts: ['action'],
+      title: chrome.i18n.getMessage('bg_3')
+    }, () => chrome.runtime.lastError),
+    await chrome.contextMenus.create({
+      id: 'disable_non_proxied_udp',
+      contexts: ['action'],
+      title: chrome.i18n.getMessage('bg_4'),
+      parentId: 'when-enabled',
+      type: 'radio'
+    }, () => chrome.runtime.lastError),
+    await chrome.contextMenus.create({
+      id: 'proxy_only',
+      contexts: ['action'],
+      title: chrome.i18n.getMessage('bg_5'),
+      parentId: 'when-enabled',
+      type: 'radio',
+      enabled: isFirefox
+    }, () => chrome.runtime.lastError),
+    await chrome.contextMenus.create({
+      id: 'when-disabled',
+      contexts: ['action'],
+      title: chrome.i18n.getMessage('bg_6')
+    }, () => chrome.runtime.lastError),
+    await chrome.contextMenus.create({
+      id: 'default_public_interface_only',
+      contexts: ['action'],
+      title: chrome.i18n.getMessage('bg_7'),
+      parentId: 'when-disabled',
+      type: 'radio'
+    }, () => chrome.runtime.lastError),
+    await chrome.contextMenus.create({
+      id: 'default_public_and_private_interfaces',
+      contexts: ['action'],
+      title: chrome.i18n.getMessage('bg_8'),
+      parentId: 'when-disabled',
+      type: 'radio'
+    }, () => chrome.runtime.lastError);
+
     //
     update();
   };

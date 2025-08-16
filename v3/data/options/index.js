@@ -23,11 +23,26 @@ chrome.storage.local.get({
   eMode: isFF ? 'proxy_only' : 'disable_non_proxied_udp',
   dMode: 'default_public_interface_only',
   dAPI: true
-}, prefs => {
+}).then(prefs => {
   document.getElementById(prefs.enabled ? 'enabled' : 'disabled').checked = true;
   document.getElementById('when-enabled').value = prefs.eMode;
   document.getElementById('when-disabled').value = prefs.dMode;
   document.getElementById('device-enum-api').checked = prefs.dAPI;
+});
+
+chrome.storage.onChanged.addListener(ps => {
+  if ('enabled' in ps) {
+    document.getElementById(ps.enabled.newValue ? 'enabled' : 'disabled').checked = true;
+  }
+  if ('eMode' in ps) {
+    document.getElementById('when-enabled').value = ps.eMode.newValue;
+  }
+  if ('dMode' in ps) {
+    document.getElementById('when-disabled').value = ps.dMode.newValue;
+  }
+  if ('dAPI' in ps) {
+    document.getElementById('device-enum-api').checked = ps.dAPI.newValue;
+  }
 });
 
 document.getElementById('save').onclick = () => chrome.storage.local.set({
@@ -35,9 +50,7 @@ document.getElementById('save').onclick = () => chrome.storage.local.set({
   eMode: document.getElementById('when-enabled').value,
   dMode: document.getElementById('when-disabled').value,
   dAPI: document.getElementById('device-enum-api').checked
-}, () => {
-  notify('Settings saved!');
-});
+}).then(() => notify('Options saved!'));
 
 // reset
 document.getElementById('reset').addEventListener('click', e => {
