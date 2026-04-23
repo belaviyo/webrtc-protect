@@ -4,59 +4,57 @@ if (typeof importScripts !== 'undefined') {
 
 const isFirefox = /Firefox/.test(navigator.userAgent) || typeof InstallTrigger !== 'undefined';
 
-function action() {
-  chrome.storage.local.get({
+async function action() {
+  const prefs = await chrome.storage.local.get({
     enabled: true,
     eMode: isFirefox ? 'proxy_only' : 'disable_non_proxied_udp',
     dMode: 'default_public_interface_only'
-  }, prefs => {
-    // webRTCIPHandlingPolicy
-    const value = prefs.enabled ? prefs.eMode : prefs.dMode;
-    chrome.privacy.network.webRTCIPHandlingPolicy.clear({}, () => {
-      chrome.privacy.network.webRTCIPHandlingPolicy.set({
-        value
-      }, () => {
-        chrome.privacy.network.webRTCIPHandlingPolicy.get({}, s => {
-          let path = '/data/icons/';
-          let title = 'WebRTC Protection in On';
+  });
+  // webRTCIPHandlingPolicy
+  const value = prefs.enabled ? prefs.eMode : prefs.dMode;
+  await chrome.privacy.network.webRTCIPHandlingPolicy.clear({});
+  await chrome.privacy.network.webRTCIPHandlingPolicy.set({
+    value
+  });
+  const s = await chrome.privacy.network.webRTCIPHandlingPolicy.get({});
 
-          if (s.value !== value) {
-            path += 'red/';
-            title = 'WebRTC access cannot be changed. It is controlled by another extension';
-          }
-          else if (prefs.enabled === false) {
-            path += 'disabled/';
-            title = 'WebRTC Protection in Off';
-          }
-          // icon
-          chrome.action.setIcon({
-            path: {
-              16: path + '16.png',
-              32: path + '32.png',
-              48: path + '48.png'
-            }
-          });
-          // tooltip
-          chrome.action.setTitle({
-            title
-          });
-        });
-      });
-    });
+  let path = '/data/icons/';
+  let title = 'WebRTC Protection in On';
+
+  if (s.value !== value) {
+    path += 'red/';
+    title = 'WebRTC access cannot be changed. It is controlled by another extension';
+  }
+  else if (prefs.enabled === false) {
+    path += 'disabled/';
+    title = 'WebRTC Protection in Off';
+  }
+  // icon
+  chrome.action.setIcon({
+    path: {
+      16: path + '16.png',
+      32: path + '32.png',
+      48: path + '48.png'
+    }
+  });
+  // tooltip
+  chrome.action.setTitle({
+    title
   });
 }
 
 action();
 
-chrome.storage.onChanged.addListener(() => {
-  action();
-});
+chrome.storage.onChanged.addListener(() => action());
 
-chrome.action.onClicked.addListener(() => chrome.storage.local.get({
-  enabled: true
-}, prefs => chrome.storage.local.set({
-  enabled: !prefs.enabled
-})));
+chrome.action.onClicked.addListener(async () => {
+  const prefs = await chrome.storage.local.get({
+    enabled: true
+  });
+  chrome.storage.local.set({
+    enabled: !prefs.enabled
+  });
+});
 
 /* FAQs & Feedback */
 {

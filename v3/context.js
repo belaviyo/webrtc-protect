@@ -2,11 +2,12 @@
 {
   const isFirefox = /Firefox/.test(navigator.userAgent) || typeof InstallTrigger !== 'undefined';
 
-  const update = () => chrome.storage.local.get({
-    dAPI: true,
-    eMode: isFirefox ? 'proxy_only' : 'disable_non_proxied_udp',
-    dMode: 'default_public_interface_only'
-  }).then(prefs => {
+  const update = async () => {
+    const prefs = await chrome.storage.local.get({
+      dAPI: true,
+      eMode: isFirefox ? 'proxy_only' : 'disable_non_proxied_udp',
+      dMode: 'default_public_interface_only'
+    });
     chrome.contextMenus.update('dAPI', {
       checked: prefs.dAPI
     });
@@ -16,7 +17,7 @@
     chrome.contextMenus.update(prefs.dMode, {
       checked: true
     });
-  });
+  };
 
   const onStartup = async () => {
     if (onStartup.done) {
