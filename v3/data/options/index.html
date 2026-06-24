@@ -3,41 +3,41 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Options Page :: WebRTC Protect</title>
+  <title data-i18n="options_1">Options Page :: WebRTC Protect</title>
   <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
   <div class="second">
     <input type="radio" name="select" id="enabled">
-    <label for="enabled">Enabled (recommended):</label>
+    <label for="enabled" data-i18n="options_2">Enabled (recommended):</label>
     <span></span>
     <select id="when-enabled">
-      <option value="disable_non_proxied_udp">Disable non-proxied UDP (force proxy)</option>
-      <option value="proxy_only">Only connections using TURN on a TCP connection through a proxy</option>
+      <option value="disable_non_proxied_udp" data-i18n="options_3">Disable non-proxied UDP (force proxy)</option>
+      <option value="proxy_only" data-i18n="options_4">Only connections using TURN on a TCP connection through a proxy</option>
     </select>
     <input type="radio" name="select" id="disabled">
-    <label for="disabled">Disabled:</label>
+    <label for="disabled" data-i18n="options_5">Disabled:</label>
     <span></span>
     <select id="when-disabled">
-      <option value="default_public_interface_only">Use the default public interface only</option>
-      <option value="default_public_and_private_interfaces">Use the default public interface and private interface</option>
+      <option value="default_public_interface_only" data-i18n="options_6">Use the default public interface only</option>
+      <option value="default_public_and_private_interfaces" data-i18n="options_7">Use the default public interface and private interface</option>
     </select>
   </div>
   <p class="second">
     <input type="checkbox" id="device-enum-api">
-    <label for="device-enum-api">Disable WebRTC Media Device Enumeration API</label>
+    <label for="device-enum-api" data-i18n="options_8">Disable WebRTC Media Device Enumeration API</label>
   </p>
 
   <p class="fgtt">
-    Can this extension protect incognito (private) mode? <span id="incognito">No</span>
-    <div class="note">To enable this option in Chrome, check the "Allow in incognito" box for this extension.</div>
+    <span data-i18n="options_9">Can this extension protect incognito (private) mode?</span> <span id="incognito">No</span>
+    <div class="note" data-i18n="options_10">To enable or disable this option, open the extension settings and toggle "Allow in Incognito" in Chrome or "Run in Private Windows" in Firefox.</div>
   </p>
-  <p class="note">These options can also be adjusted via the right-click context menu on the action button.</p>
+  <p class="note" data-i18n="options_11">These settings are also available from the action button's context menu (right-click).</p>
 
   <div id="buttons">
-    <input type="button" value="Factory Reset" id="reset">
-    <input type="button" value="Support Development" id="support">
-    <input type="button" value="Save Options" id="save">
+    <input type="button" data-i18n="options_12@value" value="Factory Reset" id="reset">
+    <input type="button" data-i18n="options_13@value" value="Support Development" id="support">
+    <input type="button" data-i18n="options_14@value" value="Save Options" id="save">
     <span id="toast"></span>
   </div>
   <script src="index.js"></script>

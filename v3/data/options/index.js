@@ -1,5 +1,11 @@
 'use strict';
 
+for (const e of document.querySelectorAll('[data-i18n]')) {
+  const [id, value] = e.dataset.i18n.split('@');
+
+  e[value || 'textContent'] = chrome.i18n.getMessage(id);
+}
+
 const toast = document.getElementById('toast');
 const isFF = /Firefox/.test(navigator.userAgent);
 
@@ -14,8 +20,9 @@ if (isFF === false) {
 }
 
 chrome.extension.isAllowedIncognitoAccess(result => {
-  document.getElementById('incognito').textContent = result ? 'Yes' : 'No';
-  document.getElementById('incognito').dataset.enabled = result;
+  const e = document.getElementById('incognito');
+  e.textContent = result ? 'Yes' : 'No';
+  e.dataset.enabled = result;
 });
 
 chrome.storage.local.get({

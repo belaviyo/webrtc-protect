@@ -25,5 +25,47 @@
   },
   "bg_8": {
     "message": "Use the default public interface and private interface"
+  },
+  "options_1": {
+    "message": "Options Page :: WebRTC Protect"
+  },
+  "options_2": {
+    "message": "Enabled (recommended):"
+  },
+  "options_3": {
+    "message": "Disable non-proxied UDP (force proxy)"
+  },
+  "options_4": {
+    "message": "Only connections using TURN on a TCP connection through a proxy"
+  },
+  "options_5": {
+    "message": "Disabled:"
+  },
+  "options_6": {
+    "message": "Use the default public interface only"
+  },
+  "options_7": {
+    "message": "Use the default public interface and private interface"
+  },
+  "options_8": {
+    "message": "Disable WebRTC Media Device Enumeration API"
+  },
+  "options_9": {
+    "message": "Can this extension protect incognito (private) mode?"
+  },
+  "options_10": {
+    "message": "To enable or disable this option, open the extension settings and toggle \"Allow in Incognito\" in Chrome or \"Run in Private Windows\" in Firefox."
+  },
+  "options_11": {
+    "message": "These settings are also available from the action button's context menu (right-click)."
+  },
+  "options_12": {
+    "message": "Factory Reset"
+  },
+  "options_13": {
+    "message": "Support Development"
+  },
+  "options_14": {
+    "message": "Save Options"
   }
 }
